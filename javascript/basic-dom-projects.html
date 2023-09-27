@@ -4,8 +4,23 @@
     <title>DOM projects</title>
 </head>
 <body>
-    <button>hello</button>
+    <p>YouTube Subscribe Button</p>
+
+    <button onclick="
+        subscribe();
+    ", class="js-subscribe-button">Subscribe
+    </button>
+
     <script>
+        function subscribe() {
+            const button_element = document.querySelector('.js-subscribe-button');
+
+            if (button_element.innerHTML === 'Subscribe') {
+                button_element.innerHTML = 'Subscribed';
+            } else {
+                button_element.innerHTML = 'Subscribe';
+            }
+        }
         
     </script>
 </body>

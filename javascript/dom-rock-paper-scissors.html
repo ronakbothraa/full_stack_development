@@ -1,0 +1,72 @@
+<html>
+    <head>
+        <title></title>
+    </head>
+    <body>
+        <p>Rock Paper Scissors</p>
+        <button onclick="compete()">Rock</button>
+        <button onclick="compete()">Paper</button>
+        <button onclick="compete()">Scissors</button>
+        <p class="score-info"></p>
+        <button onclick="reset()">Reset Score</button>
+        <script>
+            let score = JSON.parse(localStorage.getItem('score')) || {
+                win:0,
+                losses:0,
+                ties:0
+            };
+
+            function pickRandomChoice() {
+                const choices = ['rock', 'paper', 'scissors'];
+                const random_number = Math.floor(Math.random() * 3);
+                return choices[random_number];
+            }
+
+            function updateScore(result) {
+                if (result === 'win') {
+                    document.querySelector('.score-info')
+                        .innerText = `You won! 
+                        ${user_inp} beats ${comp_inp}
+                        wins: ${score.win} losses: ${score.losses} ties: ${score.ties}`;
+                    score.win++;
+                } else if (result === 'loss') {
+                    document.querySelector('.score-info')
+                        .innerText = `You lose!
+                        ${user_inp} beats ${comp_inp}
+                        wins: ${score.win} losses: ${score.losses} ties: ${score.ties}`;
+                    score.losses++;
+                } else {
+                    document.querySelector('.score-info')
+                        .innerText = `You tie!
+                        ${user_inp} beats ${comp_inp}
+                        wins: ${score.win} losses: ${score.losses} ties: ${score.ties}`;
+                    score.ties++;
+                }
+                localStorage.setItem('score', JSON.stringify(score));
+            }
+
+            function compete() {
+                user_inp = document.querySelector('button').innerText.toLowerCase();
+                comp_inp = pickRandomChoice();
+                if (user_inp === comp_inp) {
+                    updateScore('tie');
+                }
+                else if((user_inp === 'rock' && comp_inp === 'scissors') || (user_inp === 'paper' && comp_inp === 'rock') || (user_inp === 'scissors' && comp_inp === 'paper')){
+                    updateScore('win');
+                }
+                else{
+                    updateScore('loss');
+                }
+            }
+
+            function reset() {
+                score.win = 0;
+                score.losses = 0;
+                score.ties = 0;
+                localStorage.setItem('score', JSON.stringify(score));
+                document.querySelector('.score-info')
+                    .innerText = `wins: ${score.win} losses: ${score.losses} ties: ${score.ties}`;
+            }
+        </script>
+    </body>
+</html>
