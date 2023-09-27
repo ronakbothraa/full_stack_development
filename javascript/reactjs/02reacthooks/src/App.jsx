@@ -1,30 +1,34 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
 
 function App() {
-  let [counter, setCounter] = useState(15)
-
-  const addValue = () => {
-    console.log('clicked', Math.random())
-    if (counter < 20)  setCounter(counter + 1)
-
-  }
-  const removeValue = () => {
-    console.log('clicked', Math.random())
-    if (counter > 0) setCounter(counter - 1)
-  }
+  let [color, setcolor] = useState('red')
 
   return (
-    <>
-      <div>
-        <h1>Counter: {counter}</h1>
-        <button onClick={addValue}>Increase value {counter}</button>
-        <br />
-        <button onClick={removeValue}>Decrese Value {counter}</button>
+    <div 
+    className='w-full h-screen duration-200'
+    style={{backgroundColor: color}}>
+      <div className='fixed flex flex-wrap justify-center 
+      bottom-12 inset-x-0 px-2'>
+        <div className='flex flex-wrap justify-center
+        gap-2 shodow-lg bg-white px-3 py-2 rounded-full'>
+          <button 
+          onClick={() => setcolor('red')}
+          className='outline-none px-4 py-1
+          rounded-full text-white shadow-lg'
+          style={{backgroundColor: "red"}}>Red</button>
+          <button 
+          onClick={() => setcolor('green')}
+          className='outline-none px-4 py-1
+          rounded-full text-white shadow-lg'
+          style={{backgroundColor: "green"}}>Green</button>
+          <button 
+          onClick={() => setcolor('blue')}
+          className='outline-none px-4 py-1
+          rounded-full text-white shadow-lg'
+          style={{backgroundColor: "blue"}}>Blue</button>
+        </div>
       </div>
-    </>
+    </div>
   )
 }
  
