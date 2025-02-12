@@ -1,3 +1,5 @@
+'use client'
+
 import { useState, useMemo, useCallback, useRef } from 'react';
 import { GoogleMap, Marker, DirectionsRenderer, Circle, MarkerClusterer } from '@react-google-maps/api';
 import Places from './places';
@@ -20,7 +22,9 @@ export default function Map() {
             clickableIcons: false,
         }),
         []
-    )
+    );
+    const onLoad = useCallback((map: any) => (mapRef.current = map), []);
+
     return (
         <div className='container'>
             <div className='controls'>
@@ -37,7 +41,10 @@ export default function Map() {
                 zoom={10} 
                 center={center}
                 mapContainerClassName='map-container'
-                options={options}></GoogleMap>
+                options={options}
+                onLoad={onLoad}>
+                    {office && <Marker position={office}/>}
+                </GoogleMap>
             </div>
         </div>
     )  

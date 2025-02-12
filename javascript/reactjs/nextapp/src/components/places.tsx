@@ -1,3 +1,5 @@
+'use client'
+
 import usePlacesAutocomplete, {
     getGeocode,
     getLatLng,
@@ -37,23 +39,28 @@ import usePlacesAutocomplete, {
     }  
 
     return (
-      <Combobox onSelect={handleSelect} as="div">
+      <Combobox onSelect={handleSelect} as="div" >
         <ComboboxInput
           value={value} 
           {...(value && { as: "input", 
           onChange: 
-            (e: React.ChangeEvent<HTMLInputElement>) => setValue(e.target.value) })}
-          disabled={!ready} 
-          className='combobox-input' 
-          placeholder='Search a place'   
+            (e: React.ChangeEvent<HTMLInputElement>) => 
+            setValue(e.target.value),
+          
+          disabled:!ready,
+          className:'combobox-input',
+          placeholder:'Search a place',
+          })}   
         />
         <ComboboxPopover as="div">
-          <ComboboxList >
+          <ComboboxList>
             {status === "OK" && 
               data.map(({id, description}) => (
               <ComboboxOption key={id} value={description} />
-            ))}
+            ))
+            }
           </ComboboxList>
         </ComboboxPopover>
       </Combobox>
     );
+              }

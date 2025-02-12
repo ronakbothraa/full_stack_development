@@ -1,3 +1,5 @@
+'use client'
+
 import {  useLoadScript } from '@react-google-maps/api';
 import Map from '../components/map';
 
