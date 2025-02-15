@@ -1,21 +1,29 @@
-const circle = {
-    radius: 1,
-    draw() {
-        console.log("draw")
+const add = {
+    street: '123 Main St',
+    city: 'Springfield',
+    state: 'IL',
+}
+
+function showAddress(address) {
+    for (let key in address) {
+        console.log(key, address[key]);
     }
 }
 
-for (let key in circle) {
-    console.log(key, circle[key])
+function createAddress(street, city, state) {
+    return {
+        street,
+        city,
+        state
+    }
 }
 
-for (let key of Object.keys(circle)) {
-    console.log(key)
-}
-for (let entry of Object.entries(circle)) {
-    console.log(entry)
+function Address(street, city, state) {
+    this.street = street;
+    this.city = city;
+    this.state = state;
 }
 
+address1 = new Address('a', 'b', 'c');
+address2 = new Address('a', 'b', 'c');
 
-if ('draw' in circle) {
-    console.log('yes')}
