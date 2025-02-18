@@ -1,21 +1,34 @@
-const video = {
-    title: 'a',
-    tags: ['a', 'b', 'c'],
-    showTags() {
-        this.tags.forEach(tag => {
-            console.log(this.title, tag);
-        });
-    }
-}
+function stopwatch() {
+    let start_watch = 0;
+    let stop_watch = 0;
+    let duration = 0;
+    let started = false;
 
-function s(...args) {
-    return args.reduce((a, b) => {
-        if (Array.isArray(b)) {
-            b = b.reduce((c, d) => {
-                return c+d
-            })
+    this.start = function() {
+        if (started  == true) {
+            throw new Error('Stopwatch has already started');
         }
-        return a+b
+        start_watch = Date.now();
+        started = true;
+    }
+    this.stop = function() {
+        if (started == false) {
+            throw new Error('Stopwatch has not started yet');
+        }
+        stop_watch = Date.now();
+        duration += (stop_watch - start_watch)/1000;
+        started = false;
+    }
+    this.reset = function() {
+        start_watch = 0;
+        start_watch = 0;
+        duration = 0;
+        started = false;
+    }
+    Object.defineProperty(this, 'duration', {
+        get: function() {
+            return duration;
+        }
     });
-}
-console.log(s(1,2,[3, 45],4,[5,65,2]))
+};
+    
