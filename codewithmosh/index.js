@@ -1,7 +1,7 @@
 function stopwatch() {
     let start_watch = 0;
     let stop_watch = 0;
-    let duration = 0;
+    let duration = 0; 
     let started = false;
 
     this.start = function() {
