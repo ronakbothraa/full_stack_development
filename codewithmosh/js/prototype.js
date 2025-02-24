@@ -5,13 +5,13 @@ shape.prototype.duplicate = function() {
     console.log('duplicate')
 }
 
-function circle() {
-    this.radius = 1
+function circle(radius) {
+    this.radius = radius
 }
 circle.prototype = Object.create(shape.prototype)
 circle.prototype.draw = function() {
     console.log('draw')
 }
-
+ 
 const s = new shape()
-const c = new circle()
+const c = new circle(3)
