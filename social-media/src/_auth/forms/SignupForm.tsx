@@ -1,3 +1,4 @@
+import { toast } from "sonner";
 import Loader from "@/components/shared/Loader";
 import { Button } from "@/components/ui/button";
 import {
@@ -10,6 +11,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { createUserAccount } from "@/lib/appwrite/api";
 import { SignUpValidation } from "@/lib/validation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -28,8 +30,15 @@ const SignupForm = () => {
     },
   });
 
-  function onSubmit(values: z.infer<typeof SignUpValidation>) {
-    console.log(values);
+  async function onSubmit(values: z.infer<typeof SignUpValidation>) {
+    const newUser = await createUserAccount(values)
+
+    if (!newUser) {
+      return toast.warning("Registration failed. Please try again.");
+    }
+
+    const session = await signInAccount(values.email, values.password)
+
   }
 
   return (
