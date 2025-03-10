@@ -86,3 +86,13 @@ export async function getCurrentUser() {
     return null; // Return null explicitly when not authenticated
   }
 }
+
+export async function signOutAccount() {
+  try {
+    const session = await account.deleteSession("current");
+    return session;
+  } catch (error) {
+    console.log(error);
+
+  }
+}
