@@ -111,6 +111,7 @@ export async function createPost(post: INewPost) {
       throw Error;
     }
 
+    console.log(fileUrl);
     // Convert tags into array
     const tags = post.tags?.replace(/ /g, "").split(",") || [];
 
@@ -122,8 +123,8 @@ export async function createPost(post: INewPost) {
       {
         creator: post.userId,
         caption: post.caption,
-        imageUrl: fileUrl,
-        imageId: uploadedFile.$id,
+        image_url: fileUrl.href,
+        image_id: uploadedFile.$id,
         location: post.location,
         tags: tags,
       }
@@ -165,7 +166,7 @@ export function getFilePreview(fileId: string) {
     );
 
     if (!fileUrl) throw Error;
-
+  
     return fileUrl;
   } catch (error) {
     console.log(error);
