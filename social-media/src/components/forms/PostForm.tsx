@@ -3,35 +3,33 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 import { Button } from "@/components/ui/button";
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
+import { Form,FormControl,FormField,FormItem,FormLabel,FormMessage, } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "../ui/textarea";
 import FileUploader from "../shared/FileUploader";
+import { PostValidation } from "@/lib/validation";
+import { Models } from "appwrite";
+import { useCreatePost } from "@/lib/react-query/queriesAndMutation";
 
-const formSchema = z.object({
-  username: z.string().min(2, {
-    message: "Username must be at least 2 characters.",
-  }),
-});
+type PostFormProps = {
+  post?: Models.Document;
+};
 
-const PostForm = () => {
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+const PostForm = ({ post }: PostFormProps) => {
+ const { mutateSync: createPost, isPending: isLoading } = useCreatePost();
+
+  const form = useForm<z.infer<typeof PostValidation>>({
+    resolver: zodResolver(PostValidation),
     defaultValues: {
-      username: "",
+      caption: post ? post.caption : "",
+      location: post ? post.location : "",
+      tags: post ? post.tags : "",
+      file: [],
     },
   });
 
   // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  function onSubmit(values: z.infer<typeof PostValidation>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     console.log(values);
@@ -65,7 +63,10 @@ const PostForm = () => {
             <FormItem className="pb-6">
               <FormLabel className="shad-form_label">Add Photos</FormLabel>
               <FormControl>
-                <FileUploader />
+                <FileUploader
+                  fieldChange={field.onChange}
+                  mediaUrl={post?.imageUrl}
+                />
               </FormControl>
               <FormMessage className="shad-form_message" />
             </FormItem>
