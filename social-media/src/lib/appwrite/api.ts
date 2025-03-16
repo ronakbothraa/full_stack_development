@@ -12,7 +12,7 @@ export async function createUserAccount(user: INewUser) {
     );
 
     if (!newAccount) throw Error;
-    
+
     const avatarUrl = avatars.getInitials(user.name);
 
     console.log(newAccount);
@@ -56,10 +56,7 @@ export async function saveUserToDB(user: {
 
 export async function signInAccount(user: { email: string; password: string }) {
   try {
-    const session = await account.createEmailSession(
-      user.email,
-      user.password
-    );
+    const session = await account.createEmailSession(user.email, user.password);
 
     return session;
   } catch (error) {
@@ -93,7 +90,6 @@ export async function signOutAccount() {
     return session;
   } catch (error) {
     console.log(error);
-
   }
 }
 
@@ -166,7 +162,7 @@ export function getFilePreview(fileId: string) {
     );
 
     if (!fileUrl) throw Error;
-  
+
     return fileUrl;
   } catch (error) {
     console.log(error);
@@ -180,4 +176,14 @@ export async function deleteFile(fileId: string) {
   } catch (error) {
     console.log(error);
   }
+}
+export async function getRecentPosts() {
+  const posts = await databases.listDocuments(
+    appwriteConfig.databaseId,
+    appwriteConfig.postsCollectionId,
+    [Query.orderDesc("$createdAt"), Query.limit(10)]
+  );
+
+  if (!posts) throw Error;
+  return posts;
 }
