@@ -4,7 +4,6 @@ import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -104,7 +103,7 @@ const SignInForm = () => {
           </Button>
           <p className="text-small-regular text-light-2 text-center mt-2">
             Don't have an account?
-            <Link to="/sign-in">Sign Up</Link>
+            <Link className="ml-1" to="/sign-up">Sign Up</Link>
           </p>
         </form>
       </div>

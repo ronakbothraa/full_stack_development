@@ -1,6 +1,16 @@
 import PostForm from "@/components/forms/PostForm";
+import Loader from "@/components/shared/Loader";
+import { useGetPostById } from "@/lib/react-query/queriesAndMutation";
+import { useParams } from "react-router-dom";
 
 const CreatePost = () => {
+    const { id } = useParams();
+    const { data: post, isPending } = useGetPostById(id || "");
+
+    if (isPending) {
+        return <Loader />;
+    }
+
   return (
     <div className="flex-1">
       <div className="common-container">
@@ -15,7 +25,7 @@ const CreatePost = () => {
         <h2 className="h3-bold md:h2-bold text-left w-full">Create Posts</h2>
       </div>
 
-      <PostForm action="Update"/>
+      <PostForm action="Update" post={post} />
     </div>
   );
 };

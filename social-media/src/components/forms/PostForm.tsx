@@ -16,16 +16,18 @@ import { Textarea } from "../ui/textarea";
 import FileUploader from "../shared/FileUploader";
 import { PostValidation } from "@/lib/validation";
 import { Models } from "appwrite";
-import { useCreatePost } from "@/lib/react-query/queriesAndMutation";
+import { useCreatePost, useUpdatePost } from "@/lib/react-query/queriesAndMutation";
 import { useUserContext } from "@/context/AuthContext";
 import { toast } from "sonner";
 
 type PostFormProps = {
   post?: Models.Document;
+  action: "Create" | "Update";
 };
 
-const PostForm = ({ post }: PostFormProps) => {
-  const { mutateAsync: createPost, isPending: isLoading } = useCreatePost();
+const PostForm = ({ post, action }: PostFormProps) => {
+  const { mutateAsync: createPost, isPending: isLoadingCreate } = useCreatePost();
+  const { mutateAsync: updatePost, isPending: isLoadingUpdate } = useUpdatePost();
   const { user } = useUserContext();
   const navigate = useNavigate();
 
@@ -41,6 +43,22 @@ const PostForm = ({ post }: PostFormProps) => {
 
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof PostValidation>) {
+
+    if (post && action === "Update") {
+      const updatedPost = await updatePost({
+        ...values,
+        postId: post.$id,
+        imageId: post.image_id,
+        imageUrl: post.image_url,
+      });
+
+      if (!updatedPost) {
+          toast.error("Failed! Please try again.");
+      }
+
+      return navigate(`/post/${post.$id}`);
+    }
+    
     const newPost = await createPost({
       ...values,
       userId: user.id,
@@ -78,12 +96,12 @@ const PostForm = ({ post }: PostFormProps) => {
           control={form.control}
           name="file"
           render={({ field }) => (
-            <FormItem className="pb-6">
+            <FormItem className="pb-6" >
               <FormLabel className="shad-form_label">Add Photos</FormLabel>
-              <FormControl>
+              <FormControl >
                 <FileUploader
                   fieldChange={field.onChange}
-                  mediaUrl={post?.imageUrl}
+                  mediaUrl={post?.image_url}
                 />
               </FormControl>
               <FormMessage className="shad-form_message" />

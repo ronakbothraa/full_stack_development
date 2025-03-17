@@ -11,7 +11,7 @@ interface FileUploaderProps {
 
 const FileUploader = ({ fieldChange, mediaUrl }: FileUploaderProps) => {
   const [file, setFile] = useState<File[]>([])
-  const [fileUrl, setFileUrl] = useState("");
+  const [fileUrl, setFileUrl] = useState(mediaUrl);
 
 
   const onDrop = useCallback((acceptedFiles: FileWithPath[]) => {
@@ -39,6 +39,8 @@ const FileUploader = ({ fieldChange, mediaUrl }: FileUploaderProps) => {
             src={fileUrl}
             alt="image"
             className="file-uploader-image"
+            width={150}
+            height={150}
           />
           <p className="file_uploader-label"> click or drag photo to replace </p>
         </div>

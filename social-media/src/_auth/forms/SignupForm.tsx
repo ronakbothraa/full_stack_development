@@ -20,7 +20,7 @@ import {
   useSignInAccount,
 } from "@/lib/react-query/queriesAndMutation";
 import { useUserContext } from "@/context/AuthContext";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const SignupForm = () => {
   const navigate = useNavigate();
@@ -145,6 +145,10 @@ const SignupForm = () => {
               "Sign Up"
             )}
           </Button>
+          <p className="text-small-regular text-light-2 text-center mt-2">
+            Don't have an account? 
+            <Link className="ml-1" to="/sign-in">Sign In</Link>
+          </p>
         </form>
       </div>
     </Form>
