@@ -11,10 +11,12 @@ import {
   deletePost,
   deleteSavedPost,
   getCurrentUser,
+  getInfinitePosts,
   getPostById,
   getRecentPosts,
   likePost,
   savePost,
+  searchPosts,
   signInAccount,
   signOutAccount,
   updatePost,
@@ -131,7 +133,7 @@ export const useGetCurrentUser = () => {
     queryKey: [QUERY_KEYS.GET_CURRENT_USER],
     queryFn: () => getCurrentUser(),
   });
-}
+};
 
 export const useGetPostById = (postId: string) => {
   return useQuery({
@@ -139,7 +141,7 @@ export const useGetPostById = (postId: string) => {
     queryFn: () => getPostById(postId),
     enabled: !!postId,
   });
-}
+};
 
 export const useUpdatePost = () => {
   const queryClient = useQueryClient();
@@ -148,37 +150,41 @@ export const useUpdatePost = () => {
     onSuccess: (data) => {
       queryClient.invalidateQueries({
         queryKey: [QUERY_KEYS.GET_POST_BY_ID, data?.$id],
-
-      })
-    }
+      });
+    },
   });
-}
+};
 
 export const useDeletePost = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: ({postId, imageId}: {postId: string, imageId: string}) => deletePost(postId, imageId),
+    mutationFn: ({ postId, imageId }: { postId: string; imageId: string }) =>
+      deletePost(postId, imageId),
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: [QUERY_KEYS.GET_RECENT_POSTS],
-      })
-    }
+      });
+    },
   });
-}
+};
 
+export const useGetPosts = () => {
+  return useInfiniteQuery({
+    queryKey: [QUERY_KEYS.GET_INFINITE_POSTS],
+    queryFn: getInfinitePosts,
+    getNextPageParam: (lastPage) => {
+      if (lastPage && lastPage?.documents.length === 0) return null;
+      const lastId = lastPage?.documents[lastPage?.documents.length! - 1].$id;
+      return lastId;
+    },
+  });
+};
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+export const useSearchPost = (searchterm: string) => {
+  return useQuery({
+    queryKey: [QUERY_KEYS.SEARCH_POSTS, searchterm],
+    queryFn: () => searchPosts(searchterm),
+    enabled: !!searchterm,
+  });
+};

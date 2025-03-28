@@ -4,6 +4,8 @@ import SignupForm from "./_auth/forms/SignupForm";
 import { Home } from "./_root/pages";
 import CreatePost from "./_root/pages/CreatePost";
 import EditPosts from "./_root/pages/EditPosts";
+import Explore from "./_root/pages/Explore";
+import PostDetails from "./_root/pages/PostDetails";
 import RootLayout from "./_root/RootLayout";
 import "./globals.css";
 import {Routes, Route} from "react-router-dom";
@@ -20,12 +22,12 @@ const App = () => {
         
         <Route element={<RootLayout />}>
           <Route index element={<Home />} />
-          <Route path="/explore" element={<div>Explore</div>} />
+          <Route path="/explore" element={<Explore />} />
           <Route path="/saved" element={<div>save</div>} />
           <Route path="/all-users" element={<div>all-user</div>} />
           <Route path="/create-post" element={<CreatePost />} />
           <Route path="/update-post/:id" element={<EditPosts />} />
-          <Route path="/posts/:id" element={<div>Explore</div>} />
+          <Route path="/post/:id" element={<PostDetails />} />
           <Route path="/profile/:id/*" element={<div>Explore</div>} />
           <Route path="/update-profile/:id" element={<div>Explore</div>} />
         </Route>
