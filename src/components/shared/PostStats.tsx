@@ -1,10 +1,10 @@
 import { Models } from "appwrite";
-import {
-  useDeleteSavedPosts,
-  useGetCurrentUser,
-  useLikePosts,
-  useSavePosts,
-} from "@/lib/react-query/queriesAndMutation";
+// import {
+//   useDeleteSavedPosts,
+//   useGetCurrentUser,
+//   useSavePosts,
+// } from "@/lib/react-query/queriesAndMutation";
+import { useLikePosts } from "@/lib/react-query/queriesAndMutation";
 import { useState } from "react";
 
 const PostStats = ({
@@ -17,13 +17,14 @@ const PostStats = ({
   const likesList = posts.likes.map((user: Models.Document) => user.$id);
 
   const [likes, setLikes] = useState(likesList);
-  const [isSaved, setIsSaved] = useState(false);
+  const [isSaved] = useState(false);
 
   const { mutate: likePost } = useLikePosts();
-  const { mutate: savePost } = useSavePosts();
-  const { mutate: deleteSavedPost } = useDeleteSavedPosts();
 
-  const { data: currentUser } = useGetCurrentUser();
+  // const { mutate: savePost } = useSavePosts();
+  // const { mutate: deleteSavedPost } = useDeleteSavedPosts();
+
+  // const { data: currentUser } = useGetCurrentUser();
 
   const handleLikePost = (e: React.MouseEvent) => {
     e.stopPropagation();

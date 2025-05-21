@@ -6,14 +6,12 @@ import {
   useGetPosts,
   useSearchPost,
 } from "@/lib/react-query/queriesAndMutation";
-import React, { useState } from "react";
+import { useState } from "react";
 
 const Explore = () => {
   const {
     data: posts,
-    fetchNextPage,
     hasNextPage,
-    isFetchingNextPage,
   } = useGetPosts();
 
   const [searchValue, setSearchValue] = useState<string>("");
@@ -72,7 +70,7 @@ const Explore = () => {
         {shouldShowSearchResults ? (
           <SearchResults
             isSearchFetching={isSearchFetching}
-            searchedPosts={searchedPosts}
+            searchedPosts={searchedPosts?.documents || []}
           />
         ) : shouldShowPosts ? (
           <p className="text-light-4 mt-10 text-center w-full">End of Posts</p>
