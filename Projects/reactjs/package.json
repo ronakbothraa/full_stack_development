@@ -1,8 +1,0 @@
-{
-  "dependencies": {
-    "@reach/combobox": "^0.18.0",
-    "@types/googlemaps": "^3.43.3",
-    "@types/reach__combobox": "^0.4.0",
-    "use-places-autocomplete": "^4.0.1"
-  }
-}
