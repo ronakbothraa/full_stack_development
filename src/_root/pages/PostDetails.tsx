@@ -14,7 +14,7 @@ const PostDetails = () => {
         <Loader />
       ) : (
         <div className="post_details-card">
-          <img src={post?.image_url} alt="post" />
+          <img src={`https://fra.cloud.appwrite.io/v1/storage/buckets/67cc2d5a0021336a641b/files/${post?.image_id}/view?project=67cc2c200020a86ca20e&mode=admin`} alt="post" />
           <div className="post_details-info">
             <div className="flex-between w-full"></div>
             <Link

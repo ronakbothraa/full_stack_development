@@ -21,7 +21,7 @@ const GridPostList = ({
         <li key={post.$id} className="relative min-w-80 h-80">
           <Link to={`/post/${post.$id}`} className="grid-post_link">
             <img
-              src={post.image_url}
+              src={`https://fra.cloud.appwrite.io/v1/storage/buckets/67cc2d5a0021336a641b/files/${post.image_id}/view?project=67cc2c200020a86ca20e&mode=admin`}
               alt="post"
               className="h-full w-full object-cover"
             />
