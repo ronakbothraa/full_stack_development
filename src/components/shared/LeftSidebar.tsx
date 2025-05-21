@@ -10,13 +10,15 @@ const LeftSidebar = () => {
   const { pathname } = useLocation();
   const { mutate: signOut, isSuccess } = useSignOutAccount();
   const navigate = useNavigate();
-  const { user } = useUserContext();
+  const { user } = useUserContext();  
+
 
   useEffect(() => {
     if (isSuccess) {
       navigate("/sign-in");
     }
   }, [isSuccess]);
+
   return (
     <nav className="leftsidebar">
       <div className="flex flex-col gap-11">

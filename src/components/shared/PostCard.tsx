@@ -3,9 +3,14 @@ import { formatDate } from "@/lib/utils";
 import { Models } from "appwrite";
 import { Link } from "react-router-dom";
 import PostStats from "./PostStats";
+import { storage } from "@/lib/appwrite/config";
 
 const PostCard = ({ post }: { post: Models.Document }) => {
   const { user } = useUserContext();
+
+  console.log("storage: ", storage.getFileDownload("67cc2d5a0021336a641b", post.$id))
+  console.log("Posts: ", post);
+  // console.log("image url: ", `https://fra.cloud.appwrite.io/v1/storage/buckets/67cc2d5a0021336a641b/files/${post.$id}/view?project=67cc2c200020a86ca20e&mode=admin`);
 
   return (
     <div className="post-card">
@@ -14,7 +19,7 @@ const PostCard = ({ post }: { post: Models.Document }) => {
           <Link to={`/profile/${post.creator.$id}`}>
             <img
               src={
-                post?.creator?.$imageUrl ||
+                post?.creator?.ImageUrl ||
                 "/assets/icons/profile-placeholder.svg"
               }
               alt="creator"
@@ -55,7 +60,7 @@ const PostCard = ({ post }: { post: Models.Document }) => {
           </ul>
         </div>
         <img
-          src={post.image_url || "assets/icons/profile-placeholder.svg"}
+          src={`https://fra.cloud.appwrite.io/v1/storage/buckets/67cc2d5a0021336a641b/files/${post.image_id}/view?project=67cc2c200020a86ca20e&mode=admin` || "assets/icons/profile-placeholder.svg"}
           alt="post image"
           className="post-card_img"
         />
