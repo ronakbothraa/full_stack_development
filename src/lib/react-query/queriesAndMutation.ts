@@ -7,7 +7,6 @@ import {
 import { INewPost, INewUser, IUpdatePost } from "../types";
 import {
   createPost,
-  createUserAccount,
   deletePost,
   deleteSavedPost,
   getCurrentUser,
@@ -22,6 +21,7 @@ import {
   updatePost,
 } from "../appwrite/api";
 import { QUERY_KEYS } from "./queryKeys";
+import { createUserAccount } from "../supabase/api";
 
 export const useCreateUserAccount = () => {
   return useMutation({
